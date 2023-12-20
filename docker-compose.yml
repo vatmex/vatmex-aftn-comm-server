@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    restart: always
+    volumes:
+      - db:/data/db
+  api:
+    build: .
+    ports:
+      - 4000:4000
+    environment:
+      PORT: 4000
+      MONGO_URI: mongodb://mongo:27017
+      DB_NAME: aftn-db
+    depends_on:
+      - mongo
+
+volumes:
+  db: {}
